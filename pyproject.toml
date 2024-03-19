@@ -1,0 +1,3 @@
+# Formatting tool Black configuartion
+[tool.black]
+line-length = 100

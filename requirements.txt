@@ -1,0 +1,4 @@
+# Here to make downloading the prerequite packages easier
+requests>=2.31.0
+pytest>=8.1.1
+prettytable>=3.10.0
