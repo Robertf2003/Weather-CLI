@@ -1,3 +1,4 @@
+from typing import Dict, Optional
 from prettytable import PrettyTable
 from src.weather_api_calls import retrieve_current_weather, create_weather
 from src.weather_details import WeatherDetails
@@ -67,18 +68,18 @@ def display_comparison_table(
     print(comparison_table)
 
 
-def prompt_for_weather() -> dict | None:
+def prompt_for_weather() -> Optional[Dict]:
     """
     Prompts the user for a city and its state code
     :return: WeatherDetails if the city was found and None if it was not
     """
-    weather: dict | None = None
+    weather: Optional[None] = None
     while weather is None:
-        city: str | None = None
+        city: Optional[str] = None
         while city is None:
             city = input("Please input the city's name ")
         # Ask for the state code since multiple cities have the same name
-        state_code: str | None = None
+        state_code: Optional[str] = None
         while state_code is None:
             state_code = input("Please input the state code ")
         weather = retrieve_current_weather(city, state_code)
@@ -144,7 +145,7 @@ def prompt_and_retrieve_weather_data() -> dict:
 
     :return: The dictionary represented with a dictionary
     """
-    weather_data_from_location: dict | None = prompt_for_weather()
+    weather_data_from_location: Optional[Dict]= prompt_for_weather()
     while weather_data_from_location is None:
         print("Data could not be retrieve please double check the inputs")
         weather_data_from_location = prompt_for_weather()

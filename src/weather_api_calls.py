@@ -1,8 +1,9 @@
 import requests
 from src.weather_details import WeatherDetails
+from typing import Dict, Optional
 
 
-def retrieve_current_weather(city: str, state_code: str) -> dict | None:
+def retrieve_current_weather(city: str, state_code: str) -> Optional[Dict]:
     """
     Retrieves the current data of a city
     :param city: The name of the city
@@ -18,13 +19,13 @@ def retrieve_current_weather(city: str, state_code: str) -> dict | None:
     api_key = "76ddb44c85f8d322138c2ca556f7245f"
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city_cleaned},{state_code_cleaned},us&appid={api_key}"
     response = requests.get(url)
-    weather_json: dict = response.json()
+    weather_json: Dict = response.json()
     if weather_json.get("message") == "city not found":
         return None
     return response.json()
 
 
-def create_weather(weather_json: dict) -> WeatherDetails:
+def create_weather(weather_json: Dict) -> WeatherDetails:
     """
     Creates a WeatherDetails using a dictionary that represents the json read
     from the openWeatherAPI
@@ -32,14 +33,14 @@ def create_weather(weather_json: dict) -> WeatherDetails:
     :return: The WeatherDetails that was created with the parsed json
     """
     # Collect atmosphere data such as temp and humidity
-    main_data: dict = weather_json.get("main")
+    main_data: Dict = weather_json.get("main")
     temp_in_k: float = main_data.get("temp")
     temp_feels_like_in_k: float = main_data.get("feels_like")
     temp_min_in: float = main_data.get("temp_min")
     temp_max_in: float = main_data.get("temp_max")
     humidity: int = main_data.get("humidity")
     # Collect wind speed
-    wind_data: dict = weather_json.get("wind")
+    wind_data: Dict = weather_json.get("wind")
     wind_speed: float = wind_data.get("speed")
     # City name
     city_name = weather_json.get("name")
